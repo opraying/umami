@@ -29,7 +29,7 @@ export const useCors = createMiddleware(
   cors({
     // Cache CORS preflight request 24 hours by default
     maxAge: Number(process.env.CORS_MAX_AGE) || 86400,
-    origin: whiteList
+    origin: true
   }),
 );
 
