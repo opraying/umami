@@ -28,7 +28,11 @@ function customScriptName(req) {
 
     if (names.find(name => pathname.endsWith(name))) {
       url.pathname = '/script.js';
-      return NextResponse.rewrite(url);
+      return NextResponse.rewrite(url, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
     }
   }
 }

@@ -155,6 +155,16 @@ const config = {
   async headers() {
     return [
       {
+        source: '/script.js',
+        headers: [
+          // CORS
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+      {
         source: '/:path*',
         headers,
       },
