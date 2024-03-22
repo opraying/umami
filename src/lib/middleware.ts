@@ -1,6 +1,6 @@
+import redis from '@umami/redis-client';
 import cors from 'cors';
 import debug from 'debug';
-import redis from '@umami/redis-client';
 import { getAuthToken, parseShareToken } from 'lib/auth';
 import { ROLES } from 'lib/constants';
 import { secret } from 'lib/crypto';
@@ -13,15 +13,23 @@ import {
   tooManyRequest,
   unauthorized,
 } from 'next-basics';
-import { NextApiRequestCollect } from 'pages/api/send';
+import type { NextApiRequestCollect } from 'pages/api/send';
 import { getUser } from '../queries';
 
 const log = debug('umami:middleware');
+
+// opraying.com, verx.app, pages.dev
+const whiteList = [
+  /opraying\.com$/,
+  /verx\.app$/,
+  /pages\.dev$/,
+]
 
 export const useCors = createMiddleware(
   cors({
     // Cache CORS preflight request 24 hours by default
     maxAge: Number(process.env.CORS_MAX_AGE) || 86400,
+    origin: whiteList
   }),
 );
 
